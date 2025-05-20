@@ -1,7 +1,7 @@
+import type { Address } from "viem";
 import { z } from "zod";
 import { SwapService } from "../services/swap.js";
 import { WalletService } from "../services/wallet.js";
-import type { Address } from "viem";
 
 const SellAgentParamsSchema = z.object({
 	tokenContract: z

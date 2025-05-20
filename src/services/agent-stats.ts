@@ -1,7 +1,7 @@
 import dedent from "dedent";
 import { API_URLS, DEV_API_URLS } from "../constants.js";
-import type { AgentStats } from "../types.js";
 import formatNumber from "../lib/format-number.js";
+import type { AgentStats } from "../types.js";
 
 async function fetchAgentStatsFromAPI(
 	agentAddress: string,

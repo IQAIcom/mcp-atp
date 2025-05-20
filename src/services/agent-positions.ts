@@ -1,8 +1,8 @@
-import type { AgentPositionsResponse } from "../types.js";
-import type { WalletService } from "./wallet.js";
+import dedent from "dedent";
 import { API_URLS, DEV_API_URLS } from "../constants.js";
 import formatNumber from "../lib/format-number.js";
-import dedent from "dedent";
+import type { AgentPositionsResponse } from "../types.js";
+import type { WalletService } from "./wallet.js";
 
 export class AgentPositionsService {
 	private walletService: WalletService;

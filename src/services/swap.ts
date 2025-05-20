@@ -6,8 +6,8 @@ import {
 	DEV_AGENT_ROUTER_ADDRESS,
 	DEV_BASE_TOKEN_ADDRESS,
 } from "../constants.js";
-import { ROUTER_ABI } from "../lib/router.abi.js";
 import { DEV_ROUTER_ABI } from "../lib/router.abi.dev.js";
+import { ROUTER_ABI } from "../lib/router.abi.js";
 import type { WalletService } from "./wallet.js";
 
 export class SwapService {

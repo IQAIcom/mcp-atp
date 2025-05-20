@@ -1,12 +1,12 @@
 import { DEFAULT_LIMIT, DEFAULT_PAGE } from "../constants.js";
+import { API_URLS, DEV_API_URLS } from "../constants.js";
 import {
 	type GetLogsParams,
 	type GetLogsResponse,
 	type LogEntry,
-	type PostLogParams,
 	LogType,
+	type PostLogParams,
 } from "../types.js";
-import { API_URLS, DEV_API_URLS } from "../constants.js";
 
 export class AgentLogsService {
 	async getLogs({

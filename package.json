@@ -1,48 +1,50 @@
 {
-  "name": "mcp-atp",
-  "version": "0.0.1",
-  "description": "Mcp server for ATP (IQAI's Agent Tokenization Platform) access",
-  "main": "dist/index.js",
-  "type": "module",
-  "bin": {
-    "mcp-atp": "dist/index.js"
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "tsc && shx chmod +x dist/index.js",
-    "prepare": "npm run build",
-    "watch": "tsc --watch",
-    "start": "node dist/index.js",
-    "publish-packages": "npm run build && changeset publish",
-    "lint": "biome check ."
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/IQAIcom/mcp-atp.git"
-  },
-  "keywords": [
-    "mcp",
-    "ATP",
-    "iqagents"
-  ],
-  "author": "IQAI",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/IQAIcom/mcp-atp/issues"
-  },
-  "homepage": "https://github.com/IQAIcom/mcp-atp#readme",
-  "dependencies": {
-    "dedent": "^1.6.0",
-    "fastmcp": "^1.27.7",
-    "viem": "^2.29.4",
-    "zod": "^3.24.4"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "*",
-    "@types/node": "^22.15.19",
-    "shx": "^0.3.4",
-    "typescript": "^5.8.3"
-  }
+	"name": "mcp-atp",
+	"version": "0.0.1",
+	"description": "Mcp server for ATP (IQAI's Agent Tokenization Platform) access",
+	"main": "dist/index.js",
+	"type": "module",
+	"bin": {
+		"mcp-atp": "dist/index.js"
+	},
+	"files": ["dist"],
+	"scripts": {
+		"build": "tsc && shx chmod +x dist/index.js",
+		"prepare": "husky",
+		"watch": "tsc --watch",
+		"start": "node dist/index.js",
+		"publish-packages": "npm run build && changeset publish",
+		"format": "biome format . --write",
+		"lint": "biome check ."
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/IQAIcom/mcp-atp.git"
+	},
+	"keywords": ["mcp", "ATP", "iqagents"],
+	"author": "IQAI",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/IQAIcom/mcp-atp/issues"
+	},
+	"homepage": "https://github.com/IQAIcom/mcp-atp#readme",
+	"dependencies": {
+		"dedent": "^1.6.0",
+		"fastmcp": "^1.27.7",
+		"viem": "^2.29.4",
+		"zod": "^3.24.4"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "*",
+		"@types/node": "^22.15.19",
+		"husky": "^9.0.0",
+		"lint-staged": "^15.0.0",
+		"shx": "^0.3.4",
+		"typescript": "^5.8.3"
+	},
+	"lint-staged": {
+		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
+			"biome check --write --organize-imports-enabled=false --no-errors-on-unmatched"
+		]
+	}
 }

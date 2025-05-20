@@ -1,6 +1,6 @@
 import { z } from "zod";
+import { DEFAULT_LIMIT, DEFAULT_PAGE } from "../constants.js";
 import { AgentLogsService } from "../services/agent-logs.js";
-import { DEFAULT_PAGE, DEFAULT_LIMIT } from "../constants.js";
 
 const GetAgentLogsParamsSchema = z.object({
 	agentTokenContract: z

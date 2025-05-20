@@ -28,5 +28,3 @@ jobs:
         run: npm run build
       - name: Biome Lint Check
         run: npm run lint
-      - name: unit tests
-        run: npm run test:plugins # Assuming 'test:plugins' is a script in package.json
