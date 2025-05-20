@@ -15,24 +15,19 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Setup pnpm 9.0.0
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9.0.0
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22.0.0
 
       - name: Install Dependencies
-        run: pnpm i
+        run: npm ci
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: pnpm publish-packages
+          publish: npm run publish-packages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
