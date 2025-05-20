@@ -107,29 +107,3 @@ Below is an example configuration snippet that an MCP client might use (e.g., in
   * If your package is linked (`npm link`) or installed globally and the `bin` entry in `package.json` is `mcp-atp`: The command could be `mcp-atp` with empty `args` (or `npm start` from the project directory).
 * **`env`**: An object containing environment variables to be set when the server process starts. This is where you provide `WALLET_PRIVATE_KEY`, `ATP_API_KEY` (if needed by the server env), and `ATP_USE_DEV`.
 * **`workingDirectory`**: The directory from which the command should be executed. This should be the root of your `mcp-atp` project.
-
-### Development
-
-* **Watch mode:** `npm run watch` (compiles TypeScript on changes).
-* **Run directly with tsx (requires `tsx` to be available):**
-
-    ```bash
-    # Ensure environment variables are set appropriately for your shell if testing this way
-    WALLET_PRIVATE_KEY="your_key" ATP_USE_DEV="true" npx tsx src/index.ts
-    ```
-
-## Publishing to `npx`
-
-Once the server is stable and built:
-
-1. Ensure your `package.json` has the correct `bin` field pointing to `dist/index.js` and the `files` array includes `"dist"`.
-2. Publish to npm:
-
-    ```bash
-    npm publish
-    ```
-
-After publishing, users should be able to run your server via `npx mcp-atp` (if `mcp-atp` is the name in your `bin` field and matches your package name or is a unique command defined in `bin`). The MCP client configuration would then simply use `"command": "npx", "args": ["mcp-atp"]` (or your chosen package name).
-
----
-*This README provides a general guide. Specifics of client configuration may vary between different MCP-compatible applications.*
