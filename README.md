@@ -28,22 +28,23 @@ The server exposes the following tools that MCP clients can utilize:
 ## Prerequisites
 
 * Node.js (v18 or newer recommended)
-* npm (comes with Node.js)
+* pnpm (See <https://pnpm.io/installation>)
 
 ## Installation
 
 There are a few ways to use `mcp-atp`:
 
-**1. Using `npx` (Recommended for most MCP client setups):**
+**1. Using `pnpm dlx` (Recommended for most MCP client setups):**
 
-   You can run the server directly using `npx` without needing a global installation. This is often the easiest way to integrate with MCP clients. See the "Running the Server with an MCP Client" section for examples.
+   You can run the server directly using `pnpm dlx` without needing a global installation. This is often the easiest way to integrate with MCP clients. See the "Running the Server with an MCP Client" section for examples.
+   (`pnpm dlx` is pnpm's equivalent of `npx`)
 
-**2. Global Installation from npm:**
+**2. Global Installation from npm (via pnpm):**
 
    Install the package globally to make the `mcp-atp` command available system-wide:
 
    ```bash
-   npm install -g @iqai/mcp-atp
+   pnpm add -g @iqai/mcp-atp
    ```
 
 **3. Building from Source (for development or custom modifications):**
@@ -58,17 +59,17 @@ There are a few ways to use `mcp-atp`:
    2. **Install dependencies:**
 
       ```bash
-      npm install
+      pnpm install
       ```
 
    3. **Build the server:**
       This compiles the TypeScript code to JavaScript in the `dist` directory.
 
       ```bash
-      npm run build
+      pnpm run build
       ```
 
-      The `prepare` script also runs `npm run build`, so dependencies are built upon installation if you clone and run `npm install`.
+      The `prepare` script also runs `pnpm run build`, so dependencies are built upon installation if you clone and run `pnpm install`.
 
 ## Configuration (Environment Variables)
 
@@ -89,20 +90,21 @@ This MCP server requires certain environment variables to be set by the MCP clie
 
 MCP clients (like AI assistants, IDE extensions, etc.) will run this server as a background process. You need to configure the client to tell it how to start your server.
 
-Below is an example configuration snippet that an MCP client might use (e.g., in a `mcp_servers.json` or similar configuration file). This example shows how to run the server using the published npm package via `npx`.
+Below is an example configuration snippet that an MCP client might use (e.g., in a `mcp_servers.json` or similar configuration file). This example shows how to run the server using the published npm package via `pnpm dlx`.
 
 ```json
 {
   "mcpServers": {
     "iq-atp-mcp-server": {
-      "command": "npx",
+      "command": "pnpm",
       "args": [
+        "dlx",
         "@iqai/mcp-atp"
       ],
       "env": {
         "WALLET_PRIVATE_KEY": "your_wallet_private_key_here",
         "ATP_API_KEY": "your_iq_atp_api_key_if_needed_by_server_env",
-        "ATP_USE_DEV": "false" // or "true"
+        "ATP_USE_DEV": "false"
       }
     }
   }
@@ -111,7 +113,7 @@ Below is an example configuration snippet that an MCP client might use (e.g., in
 
 **Alternative if Globally Installed:**
 
-If you have installed `mcp-atp` globally (`npm install -g @iqai/mcp-atp`), you can simplify the `command` and `args`:
+If you have installed `mcp-atp` globally (`pnpm add -g @iqai/mcp-atp`), you can simplify the `command` and `args`:
 
 ```json
 {
@@ -120,20 +122,20 @@ If you have installed `mcp-atp` globally (`npm install -g @iqai/mcp-atp`), you c
       "command": "mcp-atp",
       "args": [],
       "env": {
-        // ... same environment variables ...
+        "WALLET_PRIVATE_KEY": "your_wallet_private_key_here",
+        "ATP_API_KEY": "your_iq_atp_api_key_if_needed_by_server_env",
+        "ATP_USE_DEV": "false"
       }
     }
   }
 }
 ```
 
-**Explanation of Client Configuration Fields:**
-
 * **`command`**: The executable to run.
-  * For `npx`: `"npx"`
+  * For `pnpm dlx`: `"pnpm"` (with `"dlx"` as the first arg)
   * For global install: `"mcp-atp"`
 * **`args`**: An array of arguments to pass to the command.
-  * For `npx`: `["@iqai/mcp-atp"]`
+  * For `pnpm dlx`: `["dlx", "@iqai/mcp-atp"]`
   * For global install: `[]`
 * **`env`**: An object containing environment variables to be set when the server process starts. This is where you provide `WALLET_PRIVATE_KEY`, `ATP_API_KEY` (if needed by the server env), and `ATP_USE_DEV`.
-* **`workingDirectory`**: Generally not required when using the published package via `npx` or a global install, as the package should handle its own paths correctly. If you were running from source (`node dist/index.js`), then setting `workingDirectory` to the project root would be important.
+* **`workingDirectory`**: Generally not required when using the published package via `pnpm dlx` or a global install, as the package should handle its own paths correctly. If you were running from source (`node dist/index.js`), then setting `workingDirectory` to the project root would be important.
