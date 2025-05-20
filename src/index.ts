@@ -1,9 +1,9 @@
 import { FastMCP } from "fastmcp";
-import { addAgentLogTool } from "./tools/addAgentLogTool.js";
+import { addAgentLogTool } from "./tools/add-agent-log.js";
 import { buyAgentTool } from "./tools/buy.js";
-import { getAgentLogsTool } from "./tools/getAgentLogsTool.js";
-import { getAgentPositionsTool } from "./tools/getAgentPositions.js";
-import { getAgentStatsTool } from "./tools/getAgentStatsTool.js";
+import { getAgentLogsTool } from "./tools/get-agent-logs.js";
+import { getAgentPositionsTool } from "./tools/get-agent-positions.js";
+import { getAgentStatsTool } from "./tools/get-agent-stats.js";
 import { sellAgentTool } from "./tools/sell.js";
 async function main() {
 	console.log("Initializing MCP ATP Server...");
