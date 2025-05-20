@@ -100,7 +100,7 @@ Below is an example configuration snippet that an MCP client might use (e.g., in
         "@iqai/mcp-atp"
       ],
       "env": {
-        "WALLET_PRIVATE_KEY": "your_ethereum_private_key_here",
+        "WALLET_PRIVATE_KEY": "your_wallet_private_key_here",
         "ATP_API_KEY": "your_iq_atp_api_key_if_needed_by_server_env",
         "ATP_USE_DEV": "false" // or "true"
       }
