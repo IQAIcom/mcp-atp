@@ -24,6 +24,9 @@
 	"keywords": ["mcp", "ATP", "iqagents"],
 	"author": "IQAI",
 	"license": "ISC",
+	"publishConfig": {
+		"access": "public"
+	},
 	"bugs": {
 		"url": "https://github.com/IQAIcom/mcp-atp/issues"
 	},
