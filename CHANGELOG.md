@@ -1,5 +1,11 @@
 # mcp-atp
 
+## 0.0.4
+
+### Patch Changes
+
+- 0d756af: add missing shebang line in the main executable file, causing it to be misinterpreted by the sys shell
+
 ## 0.0.3
 
 ### Patch Changes
