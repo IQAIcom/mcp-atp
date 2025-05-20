@@ -1,5 +1,11 @@
 # mcp-atp
 
+## 0.0.5
+
+### Patch Changes
+
+- c0beeba: migrate from npm to pnpm
+
 ## 0.0.4
 
 ### Patch Changes
