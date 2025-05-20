@@ -1,5 +1,5 @@
 {
-	"name": "mcp-atp",
+	"name": "@iqai/mcp-atp",
 	"version": "0.0.2",
 	"description": "Mcp server for ATP (IQAI's Agent Tokenization Platform) access",
 	"main": "dist/index.js",
