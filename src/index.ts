@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { FastMCP } from "fastmcp";
 import { addAgentLogTool } from "./tools/add-agent-log.js";
 import { buyAgentTool } from "./tools/buy.js";
