@@ -23,7 +23,6 @@ The server exposes the following tools that MCP clients can utilize:
 * **`ATP_ADD_AGENT_LOG`**: Add a new log entry for a specific AI agent.
   * Parameters: `agentTokenContract` (string), `content` (string), `apiKey` (string), `txHash` (string, optional), `chainId` (number, optional)
   * Note: The `apiKey` for this tool is passed as a parameter directly by the calling client, not from the server's environment.
-* **(Coming Soon)** `ATP_GET_AGENTS`: List available AI agents for trading.
 
 ## Prerequisites
 
