@@ -31,7 +31,7 @@ export class GetAgentsService {
 			});
 
 			if (!response.ok) {
-				throw new Error(`Failed to fetch agent stats: ${response.statusText}`);
+				throw new Error(`Failed to fetch agents: ${response.statusText}`);
 			}
 			const data = (await response.json()) as GetAgentsResponse;
 			return data.agents;
