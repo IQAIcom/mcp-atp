@@ -1,4 +1,3 @@
-import { elizaLogger } from "@elizaos/core";
 import dedent from "dedent";
 import { API_URLS, DEV_API_URLS } from "../constants.js";
 import formatNumber from "../lib/format-number.js";
@@ -22,7 +21,7 @@ export class GetAgentsService {
 			if (params.sort) url.searchParams.append("sort", params.sort);
 			if (params.limit)
 				url.searchParams.append("limit", params.limit.toString());
-			elizaLogger.info("🔍 Fetching agents", { url });
+			console.info("🔍 Fetching agents", { url });
 
 			const response = await fetch(url.toString(), {
 				method: "GET",
