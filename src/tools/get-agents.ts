@@ -1,4 +1,3 @@
-import { elizaLogger } from "@elizaos/core";
 import { z } from "zod";
 import { GetAgentsService } from "../services/get-agents.js";
 
@@ -26,7 +25,7 @@ export const getAgentsTool = {
 	parameters: GetAgentsParamsSchema,
 	execute: async (params: z.infer<typeof GetAgentsParamsSchema>) => {
 		try {
-			elizaLogger.info("🤖 Executing ATP_GET_AGENTS tool", { params });
+			console.info("🤖 Executing ATP_GET_AGENTS tool", { params });
 
 			const validatedParams = GetAgentsParamsSchema.parse(params);
 
@@ -35,7 +34,7 @@ export const getAgentsTool = {
 
 			const formattedAgents = agentsService.formatAgents(agents);
 
-			elizaLogger.info("✅ Successfully retrieved agents", {
+			console.info("✅ Successfully retrieved agents", {
 				count: agents.length,
 				sort: validatedParams.sort,
 				limit: validatedParams.limit,
@@ -45,7 +44,7 @@ export const getAgentsTool = {
 		} catch (error) {
 			const errorMessage =
 				error instanceof Error ? error.message : String(error);
-			elizaLogger.error("❌ Failed to get agents", { error: errorMessage });
+			console.error("❌ Failed to get agents", { error: errorMessage });
 			throw new Error(`Failed to retrieve agents: ${errorMessage}`);
 		}
 	},
