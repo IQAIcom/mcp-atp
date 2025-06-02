@@ -5,6 +5,7 @@ import { buyAgentTool } from "./tools/buy.js";
 import { getAgentLogsTool } from "./tools/get-agent-logs.js";
 import { getAgentPositionsTool } from "./tools/get-agent-positions.js";
 import { getAgentStatsTool } from "./tools/get-agent-stats.js";
+import { getAgentsTool } from "./tools/get-agents.js";
 import { sellAgentTool } from "./tools/sell.js";
 async function main() {
 	console.log("Initializing MCP ATP Server...");
@@ -15,6 +16,7 @@ async function main() {
 	});
 
 	server.addTool(getAgentStatsTool);
+	server.addTool(getAgentsTool);
 	server.addTool(getAgentLogsTool);
 	server.addTool(addAgentLogTool);
 	server.addTool(buyAgentTool);
