@@ -1,5 +1,11 @@
 # mcp-atp
 
+## 0.0.6
+
+### Patch Changes
+
+- 99de5d7: added get-agents tool
+
 ## 0.0.5
 
 ### Patch Changes
