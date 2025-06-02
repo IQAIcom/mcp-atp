@@ -38,7 +38,7 @@ export class GetAgentsService {
 		} catch (error) {
 			const errorMessage =
 				error instanceof Error ? error.message : String(error);
-			throw new Error(`Failed to fetch agent stats: ${errorMessage}`);
+			throw new Error(`Failed to fetch agents: ${errorMessage}`);
 		}
 	}
 
