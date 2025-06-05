@@ -1,5 +1,6 @@
 import type { Address } from "viem";
 import { z } from "zod";
+import { env } from "../config.js";
 import { SwapService } from "../services/swap.js";
 import { WalletService } from "../services/wallet.js";
 
@@ -16,8 +17,10 @@ const SellAgentParamsSchema = z.object({
 		.describe("The contract address of the agent token to sell."),
 	amount: z
 		.string()
-		.regex(/^\d+(\.\d+)?$/, { message: "Amount must be a valid number." })
-		.describe("The amount of agent tokens to sell."),
+		.regex(/^\d+$/, { message: "Amount must be a valid integer in wei." })
+		.describe(
+			"The amount of agent tokens to sell, specified in wei units (e.g., '1000000000000000000' for 1 token).",
+		),
 });
 
 export const sellAgentTool = {
@@ -25,7 +28,7 @@ export const sellAgentTool = {
 	description: "Sell AI agent tokens back to the protocol.",
 	parameters: SellAgentParamsSchema,
 	execute: async (args: z.infer<typeof SellAgentParamsSchema>) => {
-		const walletPrivateKey = process.env.WALLET_PRIVATE_KEY;
+		const walletPrivateKey = env.ATP_WALLET_PRIVATE_KEY;
 		if (!walletPrivateKey) {
 			throw new Error(
 				"WALLET_PRIVATE_KEY is not set in the environment. This is required to execute trades.",
@@ -45,7 +48,10 @@ export const sellAgentTool = {
 				amount: args.amount,
 			});
 
-			return `✅ Successfully sold tokens for agent ${args.tokenContract}. Transaction Hash: ${result.txHash}`;
+			return `
+			✅ Successfully sold tokens for agent ${args.tokenContract}.
+			Transaction Hash: ${result.txHash}
+			`;
 		} catch (error: unknown) {
 			const message =
 				error instanceof Error

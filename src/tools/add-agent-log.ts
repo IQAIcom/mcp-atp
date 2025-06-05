@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { env } from "../config.js";
 import { AgentLogsService } from "../services/agent-logs.js";
 
 const AddAgentLogParamsSchema = z.object({
@@ -31,7 +32,7 @@ export const addAgentLogTool = {
 		"Add a new log entry for a specific AI agent. Requires API key as a parameter.",
 	parameters: AddAgentLogParamsSchema,
 	execute: async (args: z.infer<typeof AddAgentLogParamsSchema>) => {
-		const apiKey = process.env.ATP_API_KEY;
+		const apiKey = env.ATP_API_KEY;
 		if (!apiKey) {
 			throw new Error(
 				"ATP_API_KEY is not set. Please set it in your environment variables.",
@@ -48,7 +49,10 @@ export const addAgentLogTool = {
 				txHash: args.txHash,
 				chainId: args.chainId,
 			});
-			return `✅ Log added successfully for agent ${args.agentTokenContract}. Log ID: ${newLogEntry.id}`;
+			return `
+			✅ Log added successfully for agent ${args.agentTokenContract}.
+			Log ID: ${newLogEntry.id}
+			`;
 		} catch (error: unknown) {
 			const message =
 				error instanceof Error
