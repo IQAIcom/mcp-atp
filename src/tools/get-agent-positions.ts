@@ -1,4 +1,4 @@
-import z from "zod";
+import { env } from "../config.js";
 import { AgentPositionsService } from "../services/agent-positions.js";
 import { WalletService } from "../services/wallet.js";
 
@@ -6,7 +6,7 @@ export const getAgentPositionsTool = {
 	name: "ATP_GET_AGENT_POSITIONS",
 	description: "Retrieve the positions of the user's agent tokens.",
 	execute: async () => {
-		const walletPrivateKey = process.env.ATP_WALLET_PRIVATE_KEY;
+		const walletPrivateKey = env.ATP_WALLET_PRIVATE_KEY;
 		if (!walletPrivateKey) {
 			throw new Error(
 				"ATP_WALLET_PRIVATE_KEY is not set. Please set it in your environment variables.",

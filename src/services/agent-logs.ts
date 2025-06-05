@@ -1,5 +1,5 @@
-import { DEFAULT_LIMIT, DEFAULT_PAGE } from "../constants.js";
-import { API_URLS, DEV_API_URLS } from "../constants.js";
+import { DEFAULT_LIMIT, DEFAULT_PAGE } from "../config.js";
+import { env } from "../config.js";
 import {
 	type GetLogsParams,
 	type GetLogsResponse,
@@ -15,9 +15,7 @@ export class AgentLogsService {
 		limit = DEFAULT_LIMIT,
 	}: GetLogsParams): Promise<GetLogsResponse> {
 		try {
-			const endPoint = process.env.ATP_USE_DEV
-				? DEV_API_URLS.LOGS
-				: API_URLS.LOGS;
+			const endPoint = `${env.ATP_API_URL}/logs`;
 			const queryParams = new URLSearchParams({
 				agentTokenContract,
 				page: page.toString(),
@@ -47,9 +45,7 @@ export class AgentLogsService {
 		chainId,
 	}: PostLogParams): Promise<LogEntry> {
 		try {
-			const endPoint = process.env.ATP_USE_DEV
-				? DEV_API_URLS.LOGS
-				: API_URLS.LOGS;
+			const endPoint = `${env.ATP_API_URL}/logs`;
 			const response = await fetch(endPoint, {
 				method: "POST",
 				headers: {

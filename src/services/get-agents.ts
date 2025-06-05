@@ -1,5 +1,5 @@
 import dedent from "dedent";
-import { API_URLS, DEV_API_URLS } from "../constants.js";
+import { env } from "../config.js";
 import formatNumber from "../lib/format-number.js";
 import type { Agent } from "../types.js";
 
@@ -15,9 +15,7 @@ interface GetAgentsResponse {
 export class GetAgentsService {
 	async getAgents(params: GetAgentsParams): Promise<Agent[]> {
 		try {
-			const url = new URL(
-				process.env.ATP_USE_DEV ? DEV_API_URLS.AGENTS : API_URLS.AGENTS,
-			);
+			const url = new URL(`${env.ATP_API_URL}/agents/top`);
 			if (params.sort) url.searchParams.append("sort", params.sort);
 			if (params.limit)
 				url.searchParams.append("limit", params.limit.toString());

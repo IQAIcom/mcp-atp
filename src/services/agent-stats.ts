@@ -1,13 +1,12 @@
 import dedent from "dedent";
-import { API_URLS, DEV_API_URLS } from "../constants.js";
+import { env } from "../config.js";
 import formatNumber from "../lib/format-number.js";
 import type { AgentStats } from "../types.js";
 
 async function fetchAgentStatsFromAPI(
 	agentAddress: string,
 ): Promise<AgentStats> {
-	const useDev = process.env.ATP_USE_DEV === "true";
-	const statsUrl = useDev ? DEV_API_URLS.AGENTS_STATS : API_URLS.AGENTS_STATS;
+	const statsUrl = `${env.ATP_API_URL}/agents/stats`;
 
 	const url = new URL(statsUrl);
 	url.searchParams.append("address", agentAddress);

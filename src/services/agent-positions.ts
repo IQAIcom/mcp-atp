@@ -1,5 +1,5 @@
 import dedent from "dedent";
-import { API_URLS, DEV_API_URLS } from "../constants.js";
+import { env } from "../config.js";
 import formatNumber from "../lib/format-number.js";
 import type { AgentPositionsResponse } from "../types.js";
 import type { WalletService } from "./wallet.js";
@@ -21,9 +21,7 @@ export class AgentPositionsService {
 		const userAddress = walletClient.account.address;
 
 		try {
-			const url = new URL(
-				process.env.ATP_USE_DEV ? DEV_API_URLS.HOLDINGS : API_URLS.HOLDINGS,
-			);
+			const url = new URL(`${env.ATP_API_URL}/holdings`);
 			url.searchParams.append("address", userAddress);
 
 			const response = await fetch(url.toString(), {

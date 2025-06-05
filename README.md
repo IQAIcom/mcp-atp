@@ -75,16 +75,12 @@ There are a few ways to use `mcp-atp`:
 
 This MCP server requires certain environment variables to be set by the MCP client that runs it. These are typically configured in the client's MCP server definition (e.g., in a `mcp.json` file for Cursor, or similar for other clients).
 
-* **`WALLET_PRIVATE_KEY`**: (Required for `ATP_GET_AGENT_POSITIONS`, `ATP_BUY_AGENT`, `ATP_SELL_AGENT`)
+* **`ATP_WALLET_PRIVATE_KEY`**: (Required for `ATP_GET_AGENT_POSITIONS`, `ATP_BUY_AGENT`, `ATP_SELL_AGENT`)
   * The private key of the wallet to be used for interacting with the ATP platform (e.g., fetching positions, signing transactions for buying/selling tokens).
   * **Security Note:** Handle this private key with extreme care. Ensure it is stored securely and only provided to trusted MCP client configurations.
 
 * **`ATP_API_KEY`**: (Potentially required for some services, e.g., if `AgentStatsService` or other services need it for their backend API calls – currently, `ATP_ADD_AGENT_LOG` takes it as a direct parameter).
   * An API key for accessing certain IQ ATP backend services.
-
-* **`ATP_USE_DEV`**: (Optional, defaults to production if not set or not `'true'`)
-  * Set to `"true"` to use the development API endpoints and contract addresses for ATP.
-  * Any other value or if omitted will use production endpoints.
 
 ## Running the Server with an MCP Client
 
@@ -102,9 +98,8 @@ Below is an example configuration snippet that an MCP client might use (e.g., in
         "@iqai/mcp-atp"
       ],
       "env": {
-        "WALLET_PRIVATE_KEY": "your_wallet_private_key_here",
+        "ATP_WALLET_PRIVATE_KEY": "your_wallet_private_key_here",
         "ATP_API_KEY": "your_iq_atp_api_key_if_needed_by_server_env",
-        "ATP_USE_DEV": "false"
       }
     }
   }
@@ -122,9 +117,8 @@ If you have installed `mcp-atp` globally (`pnpm add -g @iqai/mcp-atp`), you can 
       "command": "mcp-atp",
       "args": [],
       "env": {
-        "WALLET_PRIVATE_KEY": "your_wallet_private_key_here",
+        "ATP_WALLET_PRIVATE_KEY": "your_wallet_private_key_here",
         "ATP_API_KEY": "your_iq_atp_api_key_if_needed_by_server_env",
-        "ATP_USE_DEV": "false"
       }
     }
   }

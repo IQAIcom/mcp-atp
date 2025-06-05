@@ -1,13 +1,7 @@
 import { type Address, erc20Abi } from "viem";
 import { fraxtal } from "viem/chains";
-import {
-	AGENT_ROUTER_ADDRESS,
-	BASE_TOKEN_ADDRESS,
-	DEV_AGENT_ROUTER_ADDRESS,
-	DEV_BASE_TOKEN_ADDRESS,
-} from "../constants.js";
-import { DEV_ROUTER_ABI } from "../lib/router.abi.dev.js";
-import { ROUTER_ABI } from "../lib/router.abi.js";
+import { env } from "../config.js";
+import { ROUTER_MINIMAL_ABI } from "../lib/router.abi.minimal.js";
 import type { WalletService } from "./wallet.js";
 
 export class SwapService {
@@ -18,13 +12,31 @@ export class SwapService {
 
 	constructor(walletService: WalletService) {
 		this.walletService = walletService;
-		this.routerAddress = (
-			process.env.ATP_USE_DEV ? DEV_AGENT_ROUTER_ADDRESS : AGENT_ROUTER_ADDRESS
-		) as Address;
-		this.baseTokenAddress = (
-			process.env.ATP_USE_DEV ? DEV_BASE_TOKEN_ADDRESS : BASE_TOKEN_ADDRESS
-		) as Address;
-		this.routerAbi = process.env.ATP_USE_DEV ? DEV_ROUTER_ABI : ROUTER_ABI;
+		this.routerAddress = env.ATP_AGENT_ROUTER_ADDRESS as Address;
+		this.baseTokenAddress = env.ATP_BASE_TOKEN_ADDRESS as Address;
+		this.routerAbi = ROUTER_MINIMAL_ABI;
+	}
+
+	private async approveTokenAllowance(amount: bigint, tokenContract: Address) {
+		const walletClient = this.walletService.getWalletClient();
+		const publicClient = this.walletService.getPublicClient();
+
+		if (!walletClient || !walletClient.account) {
+			throw new Error(
+				"Wallet client or account is not available. Ensure the wallet is properly initialized with a private key.",
+			);
+		}
+
+		// Approve base token
+		const approveTx = await walletClient.writeContract({
+			address: tokenContract,
+			abi: erc20Abi,
+			functionName: "approve",
+			args: [this.routerAddress, amount],
+			chain: fraxtal,
+			account: walletClient.account,
+		});
+		await publicClient.waitForTransactionReceipt({ hash: approveTx });
 	}
 
 	async buy({
@@ -39,28 +51,16 @@ export class SwapService {
 				"Wallet client or account is not available. Ensure the wallet is properly initialized with a private key.",
 			);
 		}
+		const amountInWei = BigInt(amount);
 
-		const amountInWei = BigInt(Number(amount) * 1e18);
+		await this.approveTokenAllowance(amountInWei, this.baseTokenAddress);
 
-		// Approve base token
-		const approveTx = await walletClient.writeContract({
-			address: this.baseTokenAddress,
-			abi: erc20Abi,
-			functionName: "approve",
-			args: [this.routerAddress, amountInWei],
-			chain: fraxtal,
-			account: walletClient.account,
-		});
-		await publicClient.waitForTransactionReceipt({ hash: approveTx });
-
-		// Execute buy
+		// Execute buy (using 3-arg overload, minAmountOut = 0n)
 		const buyTx = await walletClient.writeContract({
 			address: this.routerAddress,
 			abi: this.routerAbi,
 			functionName: "buy",
-			args: process.env.ATP_USE_DEV
-				? [tokenContract, amountInWei]
-				: [tokenContract, amountInWei, 0n],
+			args: [tokenContract, amountInWei, 0n],
 			chain: fraxtal,
 			account: walletClient.account,
 		});
@@ -81,27 +81,15 @@ export class SwapService {
 				"Wallet client or account is not available. Ensure the wallet is properly initialized with a private key.",
 			);
 		}
+		const amountInWei = BigInt(amount);
 
-		const amountInWei = BigInt(Number(amount) * 1e18);
-		// Approve agent token
-		const approveTx = await walletClient.writeContract({
-			address: tokenContract,
-			abi: erc20Abi,
-			functionName: "approve",
-			args: [this.routerAddress, amountInWei],
-			chain: fraxtal,
-			account: walletClient.account,
-		});
-		await publicClient.waitForTransactionReceipt({ hash: approveTx });
+		await this.approveTokenAllowance(amountInWei, tokenContract);
 
-		// Execute sell
 		const sellTx = await walletClient.writeContract({
 			address: this.routerAddress,
 			abi: this.routerAbi,
 			functionName: "sell",
-			args: process.env.ATP_USE_DEV
-				? [tokenContract, amountInWei]
-				: [tokenContract, amountInWei, 0n],
+			args: [tokenContract, amountInWei, 0n],
 			chain: fraxtal,
 			account: walletClient.account,
 		});
