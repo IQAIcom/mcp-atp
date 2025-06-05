@@ -1,5 +1,11 @@
 # mcp-atp
 
+## 0.0.7
+
+### Patch Changes
+
+- 4d45995: Updated router abi, the dev router abi on previous versions is not valid. from now on the router address, the api & the iq address can be set in env (optional, defaults are set in src/config.ts).
+
 ## 0.0.6
 
 ### Patch Changes
