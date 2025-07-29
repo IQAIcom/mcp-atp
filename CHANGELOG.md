@@ -1,5 +1,11 @@
 # mcp-atp
 
+## 0.0.8
+
+### Patch Changes
+
+- b01af58: Update abi to fix buy/sell operations reverting
+
 ## 0.0.7
 
 ### Patch Changes
