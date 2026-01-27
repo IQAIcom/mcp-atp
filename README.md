@@ -1,134 +1,147 @@
-# MCP-ATP: Model Context Protocol Server for IQ AI Agent Tokenization Platform
+# 🤖 MCP-ATP: Agent Tokenization Platform
 
-This project implements a Model Context Protocol (MCP) server to interact with the IQ AI Agent Tokenization Platform (ATP). It allows MCP-compatible clients (like AI assistants, IDE extensions, or custom applications) to access ATP functionalities such as viewing agent statistics, managing token positions, trading agent tokens, and handling agent logs.
+[![npm version](https://img.shields.io/npm/v/@iqai/mcp-atp.svg)](https://www.npmjs.com/package/@iqai/mcp-atp)
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 
-This server is built using TypeScript and `fastmcp`.
+## 📖 Overview
 
-## Features (MCP Tools)
+The MCP-ATP Server enables AI agents to interact with IQ AI's [Agent Tokenization Platform (ATP)](https://agents.iq.wiki). This server provides comprehensive access to agent statistics, token positions, trading functionalities, and agent logs.
 
-The server exposes the following tools that MCP clients can utilize:
+By implementing the Model Context Protocol (MCP), this server allows Large Language Models (LLMs) to discover AI agents, analyze agent performance, trade agent tokens, and manage agent logs directly through their context window, bridging the gap between AI and decentralized agent tokenization.
 
-* **`ATP_AGENT_STATS`**: Fetch statistics and details for a specific AI agent.
-  * Parameters: `tokenContract` (string)
-* **`ATP_GET_AGENT_POSITIONS`**: Retrieve the user's current holdings in ATP AI tokens.
-  * Requires `WALLET_PRIVATE_KEY` in the environment.
-* **`ATP_BUY_AGENT`**: Purchase AI agent tokens using IQ as the base currency.
-  * Parameters: `tokenContract` (string), `amount` (string)
-  * Requires `WALLET_PRIVATE_KEY` in the environment.
-* **`ATP_SELL_AGENT`**: Sell AI agent tokens back to the protocol.
-  * Parameters: `tokenContract` (string), `amount` (string)
-  * Requires `WALLET_PRIVATE_KEY` in the environment.
-* **`ATP_GET_AGENT_LOGS`**: Retrieve logs for a specific AI agent, with pagination.
-  * Parameters: `agentTokenContract` (string), `page` (number, optional), `limit` (number, optional)
-* **`ATP_ADD_AGENT_LOG`**: Add a new log entry for a specific AI agent.
-  * Parameters: `agentTokenContract` (string), `content` (string), `apiKey` (string), `txHash` (string, optional), `chainId` (number, optional)
-  * Note: The `apiKey` for this tool is passed as a parameter directly by the calling client, not from the server's environment.
+## ✨ Features
 
-## Prerequisites
+*   **Agent Discovery**: Search and retrieve AI agent statistics and details.
+*   **Portfolio Tracking**: Monitor user holdings in ATP AI tokens.
+*   **Token Trading**: Buy and sell AI agent tokens using IQ as the base currency.
+*   **Log Management**: Retrieve and add logs for specific AI agents.
 
-* Node.js (v18 or newer recommended)
-* pnpm (See <https://pnpm.io/installation>)
+## 📦 Installation
 
-## Installation
+### 🚀 Using pnpm dlx (Recommended)
 
-There are a few ways to use `mcp-atp`:
+To use this server without installing it globally:
 
-**1. Using `pnpm dlx` (Recommended for most MCP client setups):**
+```bash
+pnpm dlx @iqai/mcp-atp
+```
 
-   You can run the server directly using `pnpm dlx` without needing a global installation. This is often the easiest way to integrate with MCP clients. See the "Running the Server with an MCP Client" section for examples.
-   (`pnpm dlx` is pnpm's equivalent of `npx`)
+### 🔧 Build from Source
 
-**2. Global Installation from npm (via pnpm):**
+```bash
+git clone https://github.com/IQAIcom/mcp-atp.git
+cd mcp-atp
+pnpm install
+pnpm run build
+```
 
-   Install the package globally to make the `mcp-atp` command available system-wide:
+## ⚡ Running with an MCP Client
 
-   ```bash
-   pnpm add -g @iqai/mcp-atp
-   ```
+Add the following configuration to your MCP client settings (e.g., `claude_desktop_config.json`).
 
-**3. Building from Source (for development or custom modifications):**
-
-   1. **Clone the repository:**
-
-      ```bash
-      git clone https://github.com/IQAIcom/mcp-atp.git
-      cd mcp-atp
-      ```
-
-   2. **Install dependencies:**
-
-      ```bash
-      pnpm install
-      ```
-
-   3. **Build the server:**
-      This compiles the TypeScript code to JavaScript in the `dist` directory.
-
-      ```bash
-      pnpm run build
-      ```
-
-      The `prepare` script also runs `pnpm run build`, so dependencies are built upon installation if you clone and run `pnpm install`.
-
-## Configuration (Environment Variables)
-
-This MCP server requires certain environment variables to be set by the MCP client that runs it. These are typically configured in the client's MCP server definition (e.g., in a `mcp.json` file for Cursor, or similar for other clients).
-
-* **`ATP_WALLET_PRIVATE_KEY`**: (Required for `ATP_GET_AGENT_POSITIONS`, `ATP_BUY_AGENT`, `ATP_SELL_AGENT`)
-  * The private key of the wallet to be used for interacting with the ATP platform (e.g., fetching positions, signing transactions for buying/selling tokens).
-  * **Security Note:** Handle this private key with extreme care. Ensure it is stored securely and only provided to trusted MCP client configurations.
-
-* **`ATP_API_KEY`**: (Potentially required for some services, e.g., if `AgentStatsService` or other services need it for their backend API calls – currently, `ATP_ADD_AGENT_LOG` takes it as a direct parameter).
-  * An API key for accessing certain IQ ATP backend services.
-
-## Running the Server with an MCP Client
-
-MCP clients (like AI assistants, IDE extensions, etc.) will run this server as a background process. You need to configure the client to tell it how to start your server.
-
-Below is an example configuration snippet that an MCP client might use (e.g., in a `mcp_servers.json` or similar configuration file). This example shows how to run the server using the published npm package via `pnpm dlx`.
+### 📋 Minimal Configuration
 
 ```json
 {
   "mcpServers": {
-    "iq-atp-mcp-server": {
+    "atp": {
       "command": "pnpm",
-      "args": [
-        "dlx",
-        "@iqai/mcp-atp"
-      ],
+      "args": ["dlx", "@iqai/mcp-atp"],
       "env": {
-        "ATP_WALLET_PRIVATE_KEY": "your_wallet_private_key_here",
-        "ATP_API_KEY": "your_iq_atp_api_key_if_needed_by_server_env",
+        "ATP_WALLET_PRIVATE_KEY": "your_wallet_private_key_here"
       }
     }
   }
 }
 ```
 
-**Alternative if Globally Installed:**
-
-If you have installed `mcp-atp` globally (`pnpm add -g @iqai/mcp-atp`), you can simplify the `command` and `args`:
+### ⚙️ Advanced Configuration (Local Build)
 
 ```json
 {
   "mcpServers": {
-    "iq-atp-mcp-server": {
-      "command": "mcp-atp",
-      "args": [],
+    "atp": {
+      "command": "node",
+      "args": ["/absolute/path/to/mcp-atp/dist/index.js"],
       "env": {
         "ATP_WALLET_PRIVATE_KEY": "your_wallet_private_key_here",
-        "ATP_API_KEY": "your_iq_atp_api_key_if_needed_by_server_env",
+        "ATP_API_KEY": "your_atp_api_key_if_needed"
       }
     }
   }
 }
 ```
 
-* **`command`**: The executable to run.
-  * For `pnpm dlx`: `"pnpm"` (with `"dlx"` as the first arg)
-  * For global install: `"mcp-atp"`
-* **`args`**: An array of arguments to pass to the command.
-  * For `pnpm dlx`: `["dlx", "@iqai/mcp-atp"]`
-  * For global install: `[]`
-* **`env`**: An object containing environment variables to be set when the server process starts. This is where you provide `WALLET_PRIVATE_KEY`, `ATP_API_KEY` (if needed by the server env), and `ATP_USE_DEV`.
-* **`workingDirectory`**: Generally not required when using the published package via `pnpm dlx` or a global install, as the package should handle its own paths correctly. If you were running from source (`node dist/index.js`), then setting `workingDirectory` to the project root would be important.
+## 🔐 Configuration (Environment Variables)
+
+| Variable | Required | Description | Default |
+| :--- | :--- | :--- | :--- |
+| `ATP_WALLET_PRIVATE_KEY` | Yes* | Wallet private key for trading and position queries | - |
+| `ATP_API_KEY` | No | API key for certain backend services | - |
+
+*Required for `ATP_GET_AGENT_POSITIONS`, `ATP_BUY_AGENT`, `ATP_SELL_AGENT` tools.
+
+**Security Note:** Handle the private key with extreme care. Ensure it is stored securely and only provided to trusted MCP client configurations.
+
+## 💡 Usage Examples
+
+### 🔍 Agent Discovery
+*   "What are the top AI agents on ATP?"
+*   "Get statistics for agent with token contract 0x123..."
+*   "Search for AI agents by name or category."
+
+### 📊 Portfolio Management
+*   "What are my current positions in ATP AI tokens?"
+*   "Show me my holdings in wallet 0xabc..."
+
+### 💹 Trading
+*   "Buy 100 IQ worth of agent tokens for 0x123..."
+*   "Sell my position in agent 0x456..."
+
+### 📝 Log Management
+*   "Get the latest logs for agent 0x123..."
+*   "Add a new log entry for my agent."
+
+## 🛠️ MCP Tools
+
+<!-- AUTO-GENERATED TOOLS START -->
+
+<!-- AUTO-GENERATED TOOLS END -->
+
+## 👨‍💻 Development
+
+### 🏗️ Build Project
+```bash
+pnpm run build
+```
+
+### 👁️ Development Mode (Watch)
+```bash
+pnpm run watch
+```
+
+### ✅ Linting & Formatting
+```bash
+pnpm run lint
+pnpm run format
+```
+
+### 📁 Project Structure
+*   `src/tools/`: Individual tool definitions
+*   `src/services/`: API client and business logic
+*   `src/lib/`: Shared utilities
+*   `src/index.ts`: Server entry point
+
+## 📚 Resources
+
+*   [IQ AI Agents Platform](https://agents.iq.wiki)
+*   [Model Context Protocol (MCP)](https://modelcontextprotocol.io)
+*   [IQ Wiki](https://iq.wiki)
+
+## ⚠️ Disclaimer
+
+This project interacts with blockchain-based financial operations. Users should exercise caution and verify all transactions independently. Trading in agent tokens involves risk.
+
+## 📄 License
+
+[ISC](LICENSE)
