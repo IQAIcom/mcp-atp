@@ -106,6 +106,60 @@ Add the following configuration to your MCP client settings (e.g., `claude_deskt
 
 <!-- AUTO-GENERATED TOOLS START -->
 
+### `ATP_ADD_AGENT_LOG`
+Add a new log entry for a specific AI agent. Requires API key as a parameter.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `agentTokenContract` | string | Yes | The contract address of the agent token. |
+| `content` | string | Yes | The content of the log message. |
+| `txHash` | string | No | Optional transaction hash associated with this log entry. |
+| `chainId` | integer | No | Optional chain ID associated with this log entry. |
+
+### `ATP_AGENT_STATS`
+Get statistics and details of a given AI agent on the ATP platform.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `tokenContract` | string | Yes | The contract address of the agent token (e.g., 0x123...abc). |
+
+### `ATP_BUY_AGENT`
+Buy AI agent tokens using IQ as the base currency.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `tokenContract` | string | Yes | The contract address of the agent token to buy. |
+| `amount` | string | Yes | The amount of base currency (IQ) to spend for buying the agent token, specified in wei units (e.g., '1000000000000000000' for 1 IQ). |
+
+### `ATP_GET_AGENT_LOGS`
+Retrieve logs for a specific AI agent, with pagination.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `agentTokenContract` | string | Yes | The contract address of the agent token. |
+| `page` | integer | No | Page number for pagination. Defaults to 1. |
+| `limit` | integer | No | Number of logs per page. Defaults to 10. |
+
+### `ATP_GET_AGENT_POSITIONS`
+Retrieve the positions of the user
+
+_No parameters_
+
+### `ATP_GET_AGENTS`
+Retrieve a list of AI agents from the ATP platform with optional sorting and limiting.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `sort` | enum | No | Sort agents by market cap, holders count, or inference count. Available options are: - mcap: Sort by market cap - holders: Sort by holders count - inferences: Sort by inference count Defaults to market cap if not specified. |
+
+### `ATP_SELL_AGENT`
+Sell AI agent tokens back to the protocol.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `tokenContract` | string | Yes | The contract address of the agent token to sell. |
+| `amount` | string | Yes | The amount of agent tokens to sell, specified in wei units (e.g., '1000000000000000000' for 1 token). |
+
 <!-- AUTO-GENERATED TOOLS END -->
 
 ## 👨‍💻 Development
