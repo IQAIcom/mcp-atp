@@ -148,9 +148,17 @@ _No parameters_
 ### `ATP_GET_AGENTS`
 Retrieve a list of AI agents from the ATP platform with optional sorting and limiting.
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `sort` | enum | No | Sort agents by market cap, holders count, or inference count. Available options are: - mcap: Sort by market cap - holders: Sort by holders count - inferences: Sort by inference count Defaults to market cap if not specified. |
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `sort` | string | No |  | 
+        Sort agents by market cap, holders count, or inference count.
+        Available options are:
+        - mcap: Sort by market cap
+        - holders: Sort by holders count
+        - inferences: Sort by inference count
+        Defaults to market cap if not specified.
+       |
+| `limit` | integer | No | 100 |  |
 
 ### `ATP_SELL_AGENT`
 Sell AI agent tokens back to the protocol.
