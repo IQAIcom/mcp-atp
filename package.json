@@ -34,7 +34,7 @@
 	"dependencies": {
 		"dedent": "^1.6.0",
 		"dotenv": "^16.5.0",
-		"fastmcp": "^1.27.7",
+		"fastmcp": "^3.32.0",
 		"viem": "^2.29.4",
 		"zod": "^3.24.4"
 	},
