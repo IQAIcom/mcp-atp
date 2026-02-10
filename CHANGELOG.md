@@ -1,5 +1,11 @@
 # mcp-atp
 
+## 0.0.9
+
+### Patch Changes
+
+- 0d2331b: fastmcp dependency upgrade to v3.32.0 for improved features and bug fixes.
+
 ## 0.0.8
 
 ### Patch Changes
